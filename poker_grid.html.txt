@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13x13 Poker Hands Grid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 800px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        td {
+            background-color: #fff;
+        }
+        .suited {
+            background-color: #d4edda;
+        }
+        .offsuit {
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <table id="pokerGrid">
+        <thead>
+            <tr id="headerRow"></tr>
+        </thead>
+        <tbody id="gridBody"></tbody>
+    </table>
+
+    <script>
+        // Define the ranks for the 13x13 grid
+        const ranks = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
+
+        // Function to generate the grid
+        function generatePokerGrid() {
+            const headerRow = document.getElementById('headerRow');
+            const gridBody = document.getElementById('gridBody');
+
+            // Populate the header row
+            headerRow.innerHTML = '<th></th>'; // Empty top-left cell
+            ranks.forEach(rank => {
+                headerRow.innerHTML += `<th>${rank}</th>`;
+            });
+
+            // Populate the grid body
+            ranks.forEach((rowRank, i) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<th>${rowRank}</th>`; // Row label
+                ranks.forEach((colRank, j) => {
+                    const cell = document.createElement('td');
+                    if (i === j) {
+                        // Diagonal: Pocket pairs (e.g., AA, KK)
+                        cell.textContent = `${rowRank}${colRank}`;
+                    } else if (i < j) {
+                        // Upper triangle: Suited hands (e.g., AKs)
+                        cell.textContent = `${rowRank}${colRank}s`;
+                        cell.classList.add('suited');
+                    } else {
+                        // Lower triangle: Offsuit hands (e.g., AKo)
+                        cell.textContent = `${rowRank}${colRank}o`;
+                        cell.classList.add('offsuit');
+                    }
+                    row.appendChild(cell);
+                });
+                gridBody.appendChild(row);
+            });
+        }
+
+        // Call the function to generate the grid when the page loads
+        window.onload = generatePokerGrid;
+    </script>
+</body>
+</html>
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+
